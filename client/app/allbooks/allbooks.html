@@ -1,0 +1,20 @@
+<div class="col-md-12">
+  <table class="table-responsive">
+    <thead>
+      <tr class="">
+        <td>Title</td>
+        <td>Author</td>
+        <td>Owner</td>
+        <td>Available</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="book in books">
+        <td>{{book.title}}</td>
+        <td>{{book.author}}</td>
+        <td>{{book.owner}}</td>
+        <td>{{book.isTraded}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
