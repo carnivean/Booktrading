@@ -20,6 +20,7 @@
     text-align: center;
     text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
     background: #4393B9;
+    padding-bottom: 80px;
 }
 
 .footer {
@@ -31,4 +32,9 @@
 
 .navbar-text {
     margin-left: 15px;
+}
+
+.icon-main {
+  color: #333;
+  padding-top: 10px;
 }

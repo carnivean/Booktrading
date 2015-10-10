@@ -5,7 +5,11 @@ angular.module('booktradingApp')
     $scope.menu = [{
       'title': 'Home',
       'link': '/'
-    }];
+    },
+      {
+        'title': 'Overview',
+        'link': 'allbooks'
+      }];
 
     $scope.isCollapsed = true;
     $scope.isLoggedIn = Auth.isLoggedIn;

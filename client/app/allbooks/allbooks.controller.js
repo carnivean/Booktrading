@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('booktradingApp')
-  .controller('AllbooksCtrl', function ($scope, $http) {
+  .controller('AllbooksCtrl', function ($scope, $http, Auth) {
+
+    $scope.currentUser = Auth.getCurrentUser;
 
     var getBooks = function () {
       $http.get('/api/books').
