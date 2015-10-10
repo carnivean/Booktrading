@@ -1,12 +1,15 @@
 'use strict';
 
 angular.module('booktradingApp')
-  .controller('MainCtrl', function ($scope, $http, socket, Auth) {
+  .controller('MainCtrl', function ($scope, $http, socket, Auth, $timeout) {
     $scope.awesomeThings = [];
     $scope.currentUser = Auth.getCurrentUser;
     $scope.isLoggedIn = Auth.isLoggedIn;
 
+    $scope.page = 'booktable';
+
     var getMyBooks = function() {
+      console.log('isLoggedIn(): ' + Auth.isLoggedIn());
       if (Auth.isLoggedIn()) {
         $http.get('/api/books/' + Auth.getCurrentUser().name)
           .success(function(data) {
@@ -38,5 +41,5 @@ angular.module('booktradingApp')
       socket.unsyncUpdates('thing');
     });
 
-    getMyBooks();
+    $timeout(getMyBooks, 1000);
   });

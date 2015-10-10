@@ -12,7 +12,7 @@
 
 <div class="container" ng-show="isLoggedIn()">
   <div class="row">
-    <div class="col-lg-12">
+    <div class="col-lg-12" ng-show="page==='booktable'">
       <h1 class="page-header">Your books:</h1>
       <div ng-include="'/components/booktable/booktable.html'"></div>
     </div>
