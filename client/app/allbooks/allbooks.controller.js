@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('booktradingApp')
-  .controller('AllbooksCtrl', function ($scope, $http, Auth) {
+  .controller('AllbooksCtrl', function ($scope, $http, Auth, socket) {
 
     $scope.currentUser = Auth.getCurrentUser;
 
@@ -14,4 +14,6 @@ angular.module('booktradingApp')
           console.log('Error in function getBooks: ' + data);
         });
     };
+
+    getBooks();
   });
