@@ -7,6 +7,8 @@
 
     <i class="fa fa-square fa-stack-1x fa-4x"></i>
     <i class="icon-main fa fa-book fa-stack-1x fa-3x"></i>
+
+    <button class="btn-dashboard btn-primary btn">My books</button>
   </div>
 </header>
 
@@ -17,16 +19,6 @@
       <div ng-include="'/components/booktable/booktable.html'"></div>
     </div>
   </div>
-
-  <form class="thing-form">
-    <label>Syncs in realtime across clients</label>
-    <p class="input-group">
-      <input type="text" class="form-control" placeholder="Add a new thing here." ng-model="newThing">
-      <span class="input-group-btn">
-        <button type="submit" class="btn btn-primary" ng-click="addThing()">Add New</button>
-      </span>
-    </p>
-  </form>
 </div>
 
 

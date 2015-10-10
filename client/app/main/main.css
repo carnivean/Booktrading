@@ -38,3 +38,18 @@
   color: #333;
   padding-top: 10px;
 }
+
+.btn-dashboard {
+  margin-top: 75px;
+  background-color: #00A000;
+}
+
+.btn-dashboard:focus {
+  background-color: #00A000;
+}
+
+.btn-dashboard:hover {
+  background-color: #00C000;
+}
+
+
