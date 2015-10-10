@@ -1,0 +1,21 @@
+<table class="table text-center">
+  <thead>
+  <tr class="">
+    <td>Title</td>
+    <td>Author</td>
+    <td>Owner</td>
+    <td>Available</td>
+    <td>Actions</td>
+  </tr>
+  </thead>
+  <tr ng-repeat="book in books">
+    <td>{{book.title}}</td>
+    <td>{{book.author}}</td>
+    <td>{{book.owner}}</td>
+    <td>{{book.isTraded}}</td>
+    <td ng-show="currentUser().name === book.owner">
+      <a href='/editbook/{{book.owner}}/{{book._id}}'>Edit Book Data</a>
+    </td>
+    <td ng-hide="currentUser().name === book.owner">Request Trade</td>
+  </tr>
+</table>

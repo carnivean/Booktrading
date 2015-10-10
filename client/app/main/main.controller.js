@@ -1,13 +1,26 @@
 'use strict';
 
 angular.module('booktradingApp')
-  .controller('MainCtrl', function ($scope, $http, socket) {
+  .controller('MainCtrl', function ($scope, $http, socket, Auth) {
     $scope.awesomeThings = [];
+    $scope.currentUser = Auth.getCurrentUser;
+    $scope.isLoggedIn = Auth.isLoggedIn;
 
-    $http.get('/api/things').success(function(awesomeThings) {
-      $scope.awesomeThings = awesomeThings;
-      socket.syncUpdates('thing', $scope.awesomeThings);
-    });
+    var getMyBooks = function() {
+      if (Auth.isLoggedIn()) {
+        $http.get('/api/books/' + Auth.getCurrentUser().name)
+          .success(function(data) {
+            $scope.books = data;
+            socket.syncUpdates('book', $scope.books);
+          })
+          .error(function(data) {
+            console.log('Error while retrieving data:');
+            console.log(data);
+          });
+      } else {
+        $scope.books = false;
+      }
+    };
 
     $scope.addThing = function() {
       if($scope.newThing === '') {
@@ -24,4 +37,6 @@ angular.module('booktradingApp')
     $scope.$on('$destroy', function () {
       socket.unsyncUpdates('thing');
     });
+
+    getMyBooks();
   });

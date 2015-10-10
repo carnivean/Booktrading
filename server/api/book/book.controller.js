@@ -20,6 +20,15 @@ exports.show = function(req, res) {
   });
 };
 
+// Get all books of a user
+exports.showUsername = function(req, res) {
+    Book.find({owner: req.params.username}, function (err, books) {
+      if(err) { return handleError(res, err); }
+      if(!books || books.length < 1) { return res.status(404).send('Not Found'); }
+      return res.json(books);
+    });
+  };
+
 // Creates a new book in the DB.
 exports.create = function(req, res) {
   Book.create(req.body, function(err, book) {
