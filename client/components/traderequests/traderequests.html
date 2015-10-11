@@ -4,11 +4,16 @@
     <td>Title</td>
     <td>Author</td>
     <td>Requested by</td>
+    <td>Action</td>
   </tr>
   </thead>
   <tr ng-repeat="trade in trades" ng-show="trade.accepted==false && trade.trader !=currentUser().name">
-    <td>{{trade.book.title}}</td>
-    <td>{{trade.book.author}}</td>
+    <td>{{tradeBook[trade.book[0]].title}}</td>
+    <td>{{tradeBook[trade.book[0]].author}}</td>
     <td>{{trade.trader}}</td>
+    <td>
+      <button class="btn-action" ng-click="acceptTrade(trade._id)"><i class="text-green fa fa-check"></i></button>
+      <button class="btn-action" ng-click="denyTrade(trade._id)"><i class="text-red fa fa-times"></i></button>
+    </td>
   </tr>
 </table>

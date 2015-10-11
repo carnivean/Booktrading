@@ -7,6 +7,8 @@ angular.module('booktradingApp')
     $scope.isLoggedIn = Auth.isLoggedIn;
 
     $scope.page = 'booktable';
+    $scope.tradeBook = {};
+    $scope.tradeObj = {};
 
     var getMyBooks = function() {
       console.log('isLoggedIn(): ' + Auth.isLoggedIn());
@@ -15,6 +17,10 @@ angular.module('booktradingApp')
           .success(function(data) {
             $scope.books = data;
             socket.syncUpdates('book', $scope.books);
+
+            for (var ind = 0; ind < data.length; ind++) {
+              $scope.tradeBook[data[ind]._id] = data[ind];
+            }
           })
           .error(function(data) {
             console.log('Error while retrieving data:');
@@ -30,6 +36,22 @@ angular.module('booktradingApp')
         $http.get('api/trades/' + Auth.getCurrentUser().name)
           .success(function(data) {
             $scope.trades = data;
+
+            for (var index = 0; index < data.length; index++) {
+              $scope.tradeObj[data[index]._id] = data[index];
+
+              if (!$scope.tradeBook[data[index].book[0]]) {
+                $http.get('api/books/' + data[index].owner + '/' + data[index].book[0])
+                  .success(function(book) {
+                    $scope.tradeBook[book._id] = book;
+                  })
+                  .error(function(data) {
+                    console.log('Error while retrieving data:');
+                    console.log(data);
+                  });
+              }
+            }
+
             socket.syncUpdates('trade', $scope.trades);
           })
           .error(function(data) {
@@ -37,6 +59,33 @@ angular.module('booktradingApp')
             console.log(data);
           });
       }
+    };
+
+    $scope.acceptTrade = function(tradeId, bookId) {
+      var changedEntry = $scope.tradeObj[tradeId];
+      changedEntry.accepted = true;
+      $http.put('/api/trades/' + tradeId, changedEntry)
+        .success(function(data) {
+            console.log('Successfully updated the trade');
+            console.log(data);
+            $location.path('/');
+        })
+        .error(function(data) {
+          console.log('Error while patching the trade: ');
+          console.log(data);
+        });
+    };
+
+    $scope.denyTrade = function(tradeId) {
+        $http.delete('/api/trades/' + tradeId)
+          .success(function(data) {
+            console.log('Successfully deleted the trade');
+            $location.path('/');
+          })
+          .error(function(data){
+            console.log('Error while deleting the trade: ');
+            console.log(data);
+          });
     };
 
     $scope.changePage = function(page) {

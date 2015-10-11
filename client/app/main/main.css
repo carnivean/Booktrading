@@ -52,4 +52,16 @@
   background-color: #00C000;
 }
 
+.text-green {
+  color: #00A000;
+}
+
+.text-red {
+  color: #cc0000;
+}
+
+.btn-action {
+  margin-left: 5px;
+}
+
 
