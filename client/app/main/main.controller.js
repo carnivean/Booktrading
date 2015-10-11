@@ -40,10 +40,10 @@ angular.module('booktradingApp')
             for (var index = 0; index < data.length; index++) {
               $scope.tradeObj[data[index]._id] = data[index];
 
-              if (!$scope.tradeBook[data[index].book[0]]) {
+              if (!$scope.tradeBook.hasOwnProperty(data[index].book[0])) {
                 $http.get('api/books/' + data[index].owner + '/' + data[index].book[0])
                   .success(function(book) {
-                    $scope.tradeBook[book._id] = book;
+                    $scope.tradeBook[book[0]._id] = book[0];
                   })
                   .error(function(data) {
                     console.log('Error while retrieving data:');
