@@ -3,15 +3,16 @@
   <tr class="">
     <td>Title</td>
     <td>Author</td>
-    <td>Requested by</td>
+    <td>Partner</td>
     <td>Direction</td>
   </tr>
   </thead>
   <tr ng-repeat="trade in trades" ng-show="trade.accepted==true">
-    <td>{{trade.book.title}}</td>
-    <td>{{trade.book.author}}</td>
-    <td>{{trade.trader}}</td>
+    <td>{{tradeBook[trade.book[0]].title}}</td>
+    <td>{{tradeBook[trade.book[0]].author}}</td>
+    <td ng-show="trade.owner==currentUser().name">{{trade.trader}}</td>
+    <td ng-hide="trade.owner==currentUser().name">{{trade.owner}}</td>
     <td ng-show="trade.owner==currentUser().name">Outgoing</td>
-    <td ng-show="trade.owner==currentUser().name">Incoming</td>
+    <td ng-hide="trade.owner==currentUser().name">Incoming</td>
   </tr>
 </table>
