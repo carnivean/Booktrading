@@ -4,6 +4,7 @@
     <td>Title</td>
     <td>Author</td>
     <td>Owner</td>
+    <td>City</td>
     <td>Available</td>
     <td>Actions</td>
   </tr>
@@ -12,6 +13,7 @@
     <td>{{book.title}}</td>
     <td>{{book.author}}</td>
     <td>{{book.owner}}</td>
+    <td>{{profiles[book.owner].city}}</td>
     <td>{{book.isTraded}}</td>
     <td ng-show="currentUser().name === book.owner">
       <a href='/editbook/{{book.owner}}/{{book._id}}'>Edit Book Data</a>

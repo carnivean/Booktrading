@@ -9,6 +9,7 @@ angular.module('booktradingApp')
     $scope.page = 'booktable';
     $scope.tradeBook = {};
     $scope.tradeObj = {};
+    $scope.profiles = {};
 
     var getMyBooks = function() {
       console.log('isLoggedIn(): ' + Auth.isLoggedIn());
@@ -61,7 +62,18 @@ angular.module('booktradingApp')
       }
     };
 
-    $scope.acceptTrade = function(tradeId, bookId) {
+    var getProfile = function(user) {
+        $http.get('api/profiles/' + user)
+          .success(function(data){
+            $scope.profiles[data[0].username] = data[0];
+          })
+          .error(function(data){
+            console.log('Error while retrieving data:');
+            console.log(data);
+          });
+    };
+
+    $scope.acceptTrade = function(tradeId) {
       var changedEntry = $scope.tradeObj[tradeId];
       changedEntry.accepted = true;
       $http.put('/api/trades/' + tradeId, changedEntry)
@@ -78,7 +90,7 @@ angular.module('booktradingApp')
 
     $scope.denyTrade = function(tradeId) {
         $http.delete('/api/trades/' + tradeId)
-          .success(function(data) {
+          .success(function() {
             console.log('Successfully deleted the trade');
             $location.path('/');
           })
