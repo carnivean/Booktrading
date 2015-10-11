@@ -6,7 +6,7 @@ var controller = require('./book.controller');
 var router = express.Router();
 
 router.get('/', controller.index);
-router.get('/:username/:id', controller.show);
+router.get('/:username/:id', controller.showUsernameAndId);
 router.get('/:username', controller.showUsername);
 router.post('/', controller.create);
 router.put('/:id', controller.update);

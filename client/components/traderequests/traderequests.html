@@ -1,0 +1,14 @@
+<table class="table text-center">
+  <thead>
+  <tr class="">
+    <td>Title</td>
+    <td>Author</td>
+    <td>Requested by</td>
+  </tr>
+  </thead>
+  <tr ng-repeat="trade in trades" ng-show="trade.accepted==false && trade.trader !=currentUser().name">
+    <td>{{trade.book.title}}</td>
+    <td>{{trade.book.author}}</td>
+    <td>{{trade.trader}}</td>
+  </tr>
+</table>

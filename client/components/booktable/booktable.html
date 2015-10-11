@@ -16,6 +16,9 @@
     <td ng-show="currentUser().name === book.owner">
       <a href='/editbook/{{book.owner}}/{{book._id}}'>Edit Book Data</a>
     </td>
-    <td ng-hide="currentUser().name === book.owner">Request Trade</td>
+    <td ng-hide="currentUser().name === book.owner">
+      <a href='/requesttrade/{{book.owner}}/{{book._id}}'>Request Trade
+      </a>
+    </td>
   </tr>
 </table>

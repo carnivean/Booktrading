@@ -1,12 +1,21 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <div ng-include="'components/dashboard/dashboard.html'"></div>
-
+{{trades}}}
 <div class="container" ng-show="isLoggedIn()">
   <div class="row">
     <div class="col-lg-12" ng-show="page==='booktable'">
-      <h1 class="page-header">Your books:</h1>
+      <h1 class="page-header">Your bookcollection:</h1>
       <div ng-include="'components/booktable/booktable.html'"></div>
+    </div>
+
+    <div class="col-lg-12" ng-show="page==='traderequests'">
+      <h1 class="page-header">Trade requests for you:</h1>
+      <div ng-include="'components/traderequests/traderequests.html'"></div>
+    </div>
+
+    <div class="col-lg-12" ng-show="page==='activetrades'">
+      <h1 class="page-header">Active Trades:</h1>
     </div>
   </div>
 </div>

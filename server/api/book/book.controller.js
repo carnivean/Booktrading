@@ -20,6 +20,20 @@ exports.show = function(req, res) {
   });
 };
 
+exports.showUsernameAndId = function(req, res) {
+  Book.find({
+    $and:
+      [
+        {owner: req.params.username},
+        {_id: req.params.id}
+      ]
+  }, function (err, books) {
+    if(err) { return handleError(res, err); }
+    if(!books || books.length < 1) { return res.status(404).send('Not Found'); }
+    return res.json(books);
+  });
+};
+
 // Get all books of a user
 exports.showUsername = function(req, res) {
     Book.find({owner: req.params.username}, function (err, books) {

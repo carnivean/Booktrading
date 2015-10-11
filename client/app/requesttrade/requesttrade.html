@@ -2,4 +2,18 @@
 
 <div ng-include="'components/dashboard/dashboard.html'"></div>
 
-
+<div class="container">
+  <div class="row">
+    <div ng-hide="isTraded" class="text-center col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-12">
+      <h3>Do yu want to reguest the following trade?</h3>
+      <h4>Borrow "{{title}}" written by "{{author}}" from {{owner}}.</h4>
+      <button class="btn-primary btn" ng-click="requestTrade()"><i class="fa fa-check"></i> Request trade </button>
+      <a href="/"><button class="btn-primary btn"><i class="fa fa-times"></i> Back to the Dashboard</button></a>
+    </div>
+    <div ng-show="isTraded" class="text-center col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-12">
+      <h3>Sorry the following book is already traded.</h3>
+      <h4>"{{title}}" written by "{{author}}" from {{owner}} can't be borrowed.</h4>
+      <a href="/"><button class="btn-primary btn"><i class="fa fa-times"></i> Back to the Dashboard</button></a>
+    </div>
+  </div>
+</div>

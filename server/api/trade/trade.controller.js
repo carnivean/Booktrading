@@ -18,7 +18,7 @@ exports.show = function(req, res) {
       $or:
       [
         {owner: req.params.username},
-        {trader: req.parsms.username}
+        {trader: req.params.username}
       ]
   }, function (err, trades) {
     if(err) { return handleError(res, err); }

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('booktradingApp')
-  .controller('MainCtrl', function ($scope, $http, socket, Auth, $timeout) {
+  .controller('MainCtrl', function ($scope, $http, socket, Auth, $timeout, $location) {
     $scope.awesomeThings = [];
     $scope.currentUser = Auth.getCurrentUser;
     $scope.isLoggedIn = Auth.isLoggedIn;
@@ -25,6 +25,25 @@ angular.module('booktradingApp')
       }
     };
 
+    var getTrades = function() {
+      if (Auth.isLoggedIn()) {
+        $http.get('api/trades/' + Auth.getCurrentUser().name)
+          .success(function(data) {
+            $scope.trades = data;
+            socket.syncUpdates('trade', $scope.trades);
+          })
+          .error(function(data) {
+            console.log('Error while retrieving data:');
+            console.log(data);
+          });
+      }
+    };
+
+    $scope.changePage = function(page) {
+        $scope.page = page;
+        $location.path('/');
+    };
+
     $scope.addThing = function() {
       if($scope.newThing === '') {
         return;
@@ -41,5 +60,6 @@ angular.module('booktradingApp')
       socket.unsyncUpdates('thing');
     });
 
+    $timeout(getTrades, 1000);
     $timeout(getMyBooks, 1000);
   });

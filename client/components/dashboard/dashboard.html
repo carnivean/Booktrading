@@ -6,6 +6,8 @@
     <i class="fa fa-square fa-stack-1x fa-4x"></i>
     <i class="icon-main fa fa-book fa-stack-1x fa-3x"></i>
 
-    <button ng-show="Auth.isLoggedIn()" class="btn-dashboard btn-primary btn">My books</button>
+    <button ng-show="isLoggedIn()" class="btn-dashboard btn-primary btn" ng-click="changePage('booktable')">My books</button>
+    <button ng-show="isLoggedIn()" class="btn-dashboard btn-primary btn" ng-click="changePage('traderequests')">Traderequests</button>
+    <button ng-show="isLoggedIn()" class="btn-dashboard btn-primary btn" ng-click="changePage('activetrades')">Active Trades</button>
   </div>
 </header>
