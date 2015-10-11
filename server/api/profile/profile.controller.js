@@ -13,7 +13,9 @@ exports.index = function(req, res) {
 
 // Get a single profile
 exports.show = function(req, res) {
-  Profile.findById(req.params.id, function (err, profile) {
+  Profile.find({
+    username: req.params.username
+  }, function (err, profile) {
     if(err) { return handleError(res, err); }
     if(!profile) { return res.status(404).send('Not Found'); }
     return res.json(profile);

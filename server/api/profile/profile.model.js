@@ -5,8 +5,9 @@ var mongoose = require('mongoose'),
 
 var ProfileSchema = new Schema({
   name: String,
-  info: String,
-  active: Boolean
+  city: String,
+  state: String,
+  username: String
 });
 
 module.exports = mongoose.model('Profile', ProfileSchema);

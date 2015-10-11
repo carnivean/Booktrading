@@ -1,8 +1,10 @@
 'use strict';
 
 angular.module('booktradingApp')
-  .controller('SettingsCtrl', function ($scope, User, Auth) {
+  .controller('SettingsCtrl', function ($scope, User, Auth, $http) {
     $scope.errors = {};
+
+    var exists = false;
 
     $scope.changePassword = function(form) {
       $scope.submitted = true;
@@ -18,4 +20,43 @@ angular.module('booktradingApp')
         });
       }
 		};
+
+    $scope.updateProfile = function() {
+      var entry = $scope.profile;
+
+      console.log(entry);
+      entry.username = Auth.getCurrentUser().name;
+      if(exists) {
+        $http.put('/api/profiles/' + $scope.profile._id, entry)
+          .success(function(data){
+            console.log('Successfully updated your profile');
+            console.log(data);
+            $scope.profileMessage = 'Successfully updated your profile.';
+          })
+          .error(function(data){
+            $scope.profileMessage = 'Error while updating your profile.';
+          });
+      } else {
+        $http.post('/api/profiles', entry)
+          .success(function(data){
+              console.log('Successfully updated your profile');
+              console.log(data);
+              $scope.profileMessage = 'Successfully updated your profile.';
+          })
+          .error(function(data){
+            $scope.profileMessage = 'Error while updating your profile.';
+          });
+      }
+    };
+
+    $http.get('/api/profiles/' + Auth.getCurrentUser().name)
+      .success(function(data){
+        $scope.profile = data[0];
+        if (data.length > 0) {
+          exists = true;
+        }
+      })
+      .error(function(data){
+        $scope.profile = {};
+      });
   });
