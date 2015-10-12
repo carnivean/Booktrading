@@ -75,7 +75,7 @@ angular.module('booktradingApp')
 
     $scope.acceptTrade = function(tradeId) {
       var changedEntry = $scope.tradeObj[tradeId];
-      changedEntry.accepted = true;
+      changedEntry.status = 1;
       $http.put('/api/trades/' + tradeId, changedEntry)
         .success(function(data) {
             console.log('Successfully updated the trade');

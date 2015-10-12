@@ -7,7 +7,7 @@
     <td>Direction</td>
   </tr>
   </thead>
-  <tr ng-repeat="trade in trades" ng-show="trade.accepted==true">
+  <tr ng-repeat="trade in trades" ng-show="trade.status==1">
     <td>{{tradeBook[trade.book[0]].title}}</td>
     <td>{{tradeBook[trade.book[0]].author}}</td>
     <td ng-show="trade.owner==currentUser().name">{{trade.trader}}</td>

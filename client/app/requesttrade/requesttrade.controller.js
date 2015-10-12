@@ -35,7 +35,7 @@ angular.module('booktradingApp')
         var newEntry = {
           owner: $routeParams.owner,
           trader: Auth.getCurrentUser().name,
-          accepted: false,
+          status: 0,
           book: [book._id]
         };
 
