@@ -11,11 +11,11 @@ angular.module('booktradingApp')
     $scope.tradeObj = {};
     $scope.profiles = {};
 
-    var getMyBooks = function() {
+    var getMyBooks = function () {
       console.log('isLoggedIn(): ' + Auth.isLoggedIn());
       if (Auth.isLoggedIn()) {
         $http.get('/api/books/' + Auth.getCurrentUser().name)
-          .success(function(data) {
+          .success(function (data) {
             $scope.books = data;
             socket.syncUpdates('book', $scope.books);
 
@@ -23,7 +23,7 @@ angular.module('booktradingApp')
               $scope.tradeBook[data[ind]._id] = data[ind];
             }
           })
-          .error(function(data) {
+          .error(function (data) {
             console.log('Error while retrieving data:');
             console.log(data);
           });
@@ -32,10 +32,10 @@ angular.module('booktradingApp')
       }
     };
 
-    var getTrades = function() {
+    var getTrades = function () {
       if (Auth.isLoggedIn()) {
         $http.get('api/trades/' + Auth.getCurrentUser().name)
-          .success(function(data) {
+          .success(function (data) {
             $scope.trades = data;
 
             for (var index = 0; index < data.length; index++) {
@@ -43,10 +43,10 @@ angular.module('booktradingApp')
 
               if (!$scope.tradeBook.hasOwnProperty(data[index].book[0])) {
                 $http.get('api/books/' + data[index].owner + '/' + data[index].book[0])
-                  .success(function(book) {
+                  .success(function (book) {
                     $scope.tradeBook[book[0]._id] = book[0];
                   })
-                  .error(function(data) {
+                  .error(function (data) {
                     console.log('Error while retrieving data:');
                     console.log(data);
                   });
@@ -55,65 +55,103 @@ angular.module('booktradingApp')
 
             socket.syncUpdates('trade', $scope.trades);
           })
-          .error(function(data) {
+          .error(function (data) {
             console.log('Error while retrieving data:');
             console.log(data);
           });
       }
     };
 
-    var getProfile = function(user) {
-        $http.get('api/profiles/' + user)
-          .success(function(data){
-            $scope.profiles[data[0].username] = data[0];
-          })
-          .error(function(data){
-            console.log('Error while retrieving data:');
-            console.log(data);
-          });
+    /*
+    var getProfile = function (user) {
+      $http.get('api/profiles/' + user)
+        .success(function (data) {
+          $scope.profiles[data[0].username] = data[0];
+        })
+        .error(function (data) {
+          console.log('Error while retrieving data:');
+          console.log(data);
+        });
     };
+    */
 
-    $scope.acceptTrade = function(tradeId) {
+    $scope.acceptTrade = function (tradeId) {
       var changedEntry = $scope.tradeObj[tradeId];
       changedEntry.status = 1;
       $http.put('/api/trades/' + tradeId, changedEntry)
-        .success(function(data) {
-            console.log('Successfully updated the trade');
-            console.log(data);
-            $location.path('/');
+        .success(function (data) {
+          console.log('Successfully updated the trade');
+          console.log(data);
+          $location.path('/');
         })
-        .error(function(data) {
+        .error(function (data) {
           console.log('Error while patching the trade: ');
           console.log(data);
         });
     };
 
-    $scope.denyTrade = function(tradeId) {
-        $http.delete('/api/trades/' + tradeId)
-          .success(function() {
-            console.log('Successfully deleted the trade');
-            $location.path('/');
-          })
-          .error(function(data){
-            console.log('Error while deleting the trade: ');
-            console.log(data);
-          });
+    $scope.rejectEndTrade = function (tradeId) {
+      if ($scope.tradeBook[tradeId].owner === Auth.getCurrentUser().name) {
+        $scope.acceptTrade(tradeId);
+      }
     };
 
-    $scope.changePage = function(page) {
-        $scope.page = page;
-        $location.path('/');
+    $scope.denyTrade = function (tradeId) {
+      $http.delete('/api/trades/' + tradeId)
+        .success(function () {
+          console.log('Successfully deleted the trade');
+          $location.path('/');
+        })
+        .error(function (data) {
+          console.log('Error while deleting the trade: ');
+          console.log(data);
+        });
     };
 
-    $scope.addThing = function() {
-      if($scope.newThing === '') {
+    $scope.requestTradeFinish = function (tradeId) {
+      var changedEntry = $scope.tradeObj[tradeId];
+      changedEntry.status = 2;
+      $http.put('/api/trades/' + tradeId, changedEntry)
+        .success(function (data) {
+          console.log('Successfully updated the trade');
+          console.log(data);
+          $location.path('/');
+        })
+        .error(function (data) {
+          console.log('Error while patching the trade: ');
+          console.log(data);
+        });
+    };
+
+    $scope.finishTrade = function (tradeId) {
+      console.log(tradeId);
+      $scope.finishTradeDirectly(tradeId);
+    };
+
+    $scope.finishTradeDirectly = function (tradeId) {
+      // this is probably unsafe, as the user has access to the scope
+      // and he can change the owner, we should do the check server side or
+      // at least get the data fresh from the server before comparing it
+      console.log(tradeId);
+      if ($scope.tradeObj[tradeId].owner === Auth.getCurrentUser().name) {
+        $scope.denyTrade(tradeId);
+      }
+    };
+
+    $scope.changePage = function (page) {
+      $scope.page = page;
+      $location.path('/');
+    };
+
+    $scope.addThing = function () {
+      if ($scope.newThing === '') {
         return;
       }
-      $http.post('/api/things', { name: $scope.newThing });
+      $http.post('/api/things', {name: $scope.newThing});
       $scope.newThing = '';
     };
 
-    $scope.deleteThing = function(thing) {
+    $scope.deleteThing = function (thing) {
       $http.delete('/api/things/' + thing._id);
     };
 

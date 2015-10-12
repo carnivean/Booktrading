@@ -1,0 +1,19 @@
+<table class="table text-center">
+  <thead>
+  <tr class="">
+    <td>Title</td>
+    <td>Author</td>
+    <td>Requested by</td>
+    <td>Action</td>
+  </tr>
+  </thead>
+  <tr ng-repeat="trade in trades" ng-show="trade.status==2 && trade.trader != currentUser().name">
+    <td>{{tradeBook[trade.book[0]].title}}</td>
+    <td>{{tradeBook[trade.book[0]].author}}</td>
+    <td>{{trade.trader}}</td>
+    <td>
+      <button class="btn-action" ng-click="finishTrade(trade._id)"><i class="text-green fa fa-check"></i></button>
+      <button class="btn-action" ng-click="rejectEndTrade(trade._id)"><i class="text-red fa fa-times"></i></button>
+    </td>
+  </tr>
+</table>

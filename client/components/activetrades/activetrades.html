@@ -5,14 +5,26 @@
     <td>Author</td>
     <td>Partner</td>
     <td>Direction</td>
+    <td>Actions</td>
   </tr>
   </thead>
-  <tr ng-repeat="trade in trades" ng-show="trade.status==1">
+  <tr ng-repeat="trade in trades" ng-show="trade.status==1 || (trade.status==2 && trade.trader !=currentUser().name)">
     <td>{{tradeBook[trade.book[0]].title}}</td>
     <td>{{tradeBook[trade.book[0]].author}}</td>
     <td ng-show="trade.owner==currentUser().name">{{trade.trader}}</td>
     <td ng-hide="trade.owner==currentUser().name">{{trade.owner}}</td>
     <td ng-show="trade.owner==currentUser().name">Outgoing</td>
     <td ng-hide="trade.owner==currentUser().name">Incoming</td>
+    <td ng-show="trade.status==1">
+      <button class="btn-action" ng-click="requestTradeFinish(trade._id)" ng-hide="trade.owner===getCurrentUser().name">
+        <i class="text-green fa fa-check"></i>
+      </button>
+      <button class="btn-action" ng-click="finishTradeDirectly(trade._id)" ng-show="trade.owner===getCurrentUser().name">
+        <i class="text-red fa fa-trash"  ></i>
+      </button>
+    </td>
+    <td ng-show="trade.status==2">
+      End of Trade already requested. Waiting for reply.
+    </td>
   </tr>
 </table>

@@ -1,9 +1,7 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <div ng-include="'components/dashboard/dashboard.html'"></div>
-{{trades}}
-<h1>Tradebook</h1>
-{{tradeBook}}
+
 <div class="container" ng-show="isLoggedIn()">
   <div class="row">
     <div class="col-lg-12" ng-show="page==='booktable'">
@@ -14,6 +12,9 @@
     <div class="col-lg-12" ng-show="page==='traderequests'">
       <h1 class="page-header">Trade requests for you:</h1>
       <div ng-include="'components/traderequests/traderequests.html'"></div>
+
+      <h1 class="page-header">Requests to end a trade:</h1>
+      <div ng-include="'components/endtrade/endtrade.html'"></div>
     </div>
 
     <div class="col-lg-12" ng-show="page==='activetrades'">

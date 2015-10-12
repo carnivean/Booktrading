@@ -14,11 +14,14 @@
     <td>{{book.author}}</td>
     <td>{{book.owner}}</td>
     <td>{{profiles[book.owner].city}}</td>
-    <td>{{book.isTraded}}</td>
+    <td>
+      <i class="text-green fa fa-thumbs-up" ng-hide="book.isTraded"></i>
+      <i class="text-red fa fa-thumbs-down" ng-show="book.isTraded"></i>
+    </td>
     <td ng-show="currentUser().name === book.owner">
       <a href='/editbook/{{book.owner}}/{{book._id}}'>Edit Book Data</a>
     </td>
-    <td ng-hide="currentUser().name === book.owner">
+    <td ng-hide="currentUser().name === book.owner && !book.isTraded">
       <a href='/requesttrade/{{book.owner}}/{{book._id}}'>Request Trade
       </a>
     </td>
