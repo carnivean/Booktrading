@@ -22,12 +22,10 @@ angular.module('booktradingApp')
 
         $http.post('/api/books', newEntry)
           .success(function(data) {
-              console.log('Successfully Posted!');
-              console.log(data);
               $scope.success = true;
           })
           .error(function(data) {
-              console.log('Error while posting the data: ' +  data);
+
           });
     };
 

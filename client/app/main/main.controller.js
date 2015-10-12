@@ -12,7 +12,6 @@ angular.module('booktradingApp')
     $scope.profiles = {};
 
     var getMyBooks = function () {
-      console.log('isLoggedIn(): ' + Auth.isLoggedIn());
       if (Auth.isLoggedIn()) {
         $http.get('/api/books/' + Auth.getCurrentUser().name)
           .success(function (data) {
@@ -24,8 +23,7 @@ angular.module('booktradingApp')
             }
           })
           .error(function (data) {
-            console.log('Error while retrieving data:');
-            console.log(data);
+
           });
       } else {
         $scope.books = false;
@@ -47,8 +45,7 @@ angular.module('booktradingApp')
                     $scope.tradeBook[book[0]._id] = book[0];
                   })
                   .error(function (data) {
-                    console.log('Error while retrieving data:');
-                    console.log(data);
+
                   });
               }
             }
@@ -56,37 +53,21 @@ angular.module('booktradingApp')
             socket.syncUpdates('trade', $scope.trades);
           })
           .error(function (data) {
-            console.log('Error while retrieving data:');
-            console.log(data);
+
           });
       }
     };
-
-    /*
-    var getProfile = function (user) {
-      $http.get('api/profiles/' + user)
-        .success(function (data) {
-          $scope.profiles[data[0].username] = data[0];
-        })
-        .error(function (data) {
-          console.log('Error while retrieving data:');
-          console.log(data);
-        });
-    };
-    */
 
     $scope.acceptTrade = function (tradeId) {
       var changedEntry = $scope.tradeObj[tradeId];
       changedEntry.status = 1;
       $http.put('/api/trades/' + tradeId, changedEntry)
         .success(function (data) {
-          console.log('Successfully updated the trade');
-          console.log(data);
+
           $location.path('/');
         })
         .error(function (data) {
-          console.log('Error while patching the trade: ');
-          console.log(data);
+
         });
     };
 
@@ -99,12 +80,10 @@ angular.module('booktradingApp')
     $scope.denyTrade = function (tradeId) {
       $http.delete('/api/trades/' + tradeId)
         .success(function () {
-          console.log('Successfully deleted the trade');
           $location.path('/');
         })
         .error(function (data) {
-          console.log('Error while deleting the trade: ');
-          console.log(data);
+
         });
     };
 
@@ -113,18 +92,16 @@ angular.module('booktradingApp')
       changedEntry.status = 2;
       $http.put('/api/trades/' + tradeId, changedEntry)
         .success(function (data) {
-          console.log('Successfully updated the trade');
-          console.log(data);
+
           $location.path('/');
         })
         .error(function (data) {
-          console.log('Error while patching the trade: ');
-          console.log(data);
+
         });
     };
 
     $scope.finishTrade = function (tradeId) {
-      console.log(tradeId);
+
       $scope.finishTradeDirectly(tradeId);
     };
 
@@ -132,7 +109,7 @@ angular.module('booktradingApp')
       // this is probably unsafe, as the user has access to the scope
       // and he can change the owner, we should do the check server side or
       // at least get the data fresh from the server before comparing it
-      console.log(tradeId);
+
       if ($scope.tradeObj[tradeId].owner === Auth.getCurrentUser().name) {
         $scope.denyTrade(tradeId);
       }

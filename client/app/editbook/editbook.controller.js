@@ -10,7 +10,6 @@ angular.module('booktradingApp')
     var getBookData = function() {
       $http.get('/api/books/' + id)
         .success(function(data) {
-          console.log(data);
           if (Auth.getCurrentUser().name != data.owner && !Auth.isAdmin()) {
             // if the current user isn't the owner of the book
             // or the Admin, he has no right to be here
@@ -22,7 +21,6 @@ angular.module('booktradingApp')
           }
         })
         .error(function(data) {
-          console.log('Error while retrieving data: ' + data);
           $location.path('/');
         });
     };
@@ -32,12 +30,10 @@ angular.module('booktradingApp')
         book.title = $scope.title;
         $http.put('/api/books/' + id, book)
           .success(function(data) {
-              console.log(data);
               $scope.success = true;
           })
           .error(function(data) {
-              console.log('Error while patching the book: ');
-              console.log(data);
+
           });
     };
 

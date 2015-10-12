@@ -24,13 +24,10 @@ angular.module('booktradingApp')
     $scope.updateProfile = function() {
       var entry = $scope.profile;
 
-      console.log(entry);
       entry.username = Auth.getCurrentUser().name;
       if(exists) {
         $http.put('/api/profiles/' + $scope.profile._id, entry)
           .success(function(data){
-            console.log('Successfully updated your profile');
-            console.log(data);
             $scope.profileMessage = 'Successfully updated your profile.';
           })
           .error(function(data){
@@ -39,8 +36,7 @@ angular.module('booktradingApp')
       } else {
         $http.post('/api/profiles', entry)
           .success(function(data){
-              console.log('Successfully updated your profile');
-              console.log(data);
+
               $scope.profileMessage = 'Successfully updated your profile.';
           })
           .error(function(data){

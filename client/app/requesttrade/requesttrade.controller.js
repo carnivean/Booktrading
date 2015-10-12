@@ -23,12 +23,10 @@ angular.module('booktradingApp')
           $scope.author = data[0].author;
           $scope.owner = data[0].owner;
           $scope.isTraded = data[0].isTraded;
-          console.log('Successfully requested data:');
-          console.log(data);
+
       })
       .error(function(data) {
-          console.log('Error while retrieving data: ');
-          console.log(data);
+
       });
 
     $scope.requestTrade = function() {
@@ -41,13 +39,11 @@ angular.module('booktradingApp')
 
         $http.post('/api/trades', newEntry)
           .success(function(data) {
-            console.log('Successfully posted the trade: ');
-            console.log(data);
+
             $location.path('/');
           })
           .error(function(data) {
-            console.log('Error while posting the trade: ');
-            console.log(data);
+
           });
     };
   });

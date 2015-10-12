@@ -26,7 +26,6 @@ angular.module('booktradingApp')
 
           socket.syncUpdates('book', $scope.books);
       }).error(function(data){
-          console.log('Error in function getBooks: ' + data);
         });
     };
 
@@ -39,8 +38,7 @@ angular.module('booktradingApp')
 
         })
         .error(function(data){
-          console.log('Error while retrieving data:');
-          console.log(data);
+
         });
     };
 
