@@ -10,7 +10,7 @@ angular.module('booktradingApp')
     var getBookData = function() {
       $http.get('/api/books/' + id)
         .success(function(data) {
-          if (Auth.getCurrentUser().name != data.owner && !Auth.isAdmin()) {
+          if (Auth.getCurrentUser().name !== data.owner && !Auth.isAdmin()) {
             // if the current user isn't the owner of the book
             // or the Admin, he has no right to be here
             $location.path('/');
